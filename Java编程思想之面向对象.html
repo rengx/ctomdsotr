@@ -1,0 +1,806 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java编程思想," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Ctomdsotr" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一切都是对象用引用操纵对象在java中，一切被视为对象，操作对象的标识符实际上是对象的一个“引用”（reference）。书中以遥控器比引用，电视机比对象，我们直接操作的是遥控器（引用），再由遥控器来调控电视机（对象），而且我们可以在房间中走动的同时调控电视机，只需携带遥控器而不是电视机。此外，即使没有电视机，遥控器也可以独立存在。这个例子可以说明，我们可以使用引用，在不同的地方操作对象；我们也可">
+<meta name="keywords" content="java编程思想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java编程思想之面向对象">
+<meta property="og:url" content="http://ctomdsotr.com/Java编程思想之面向对象.html">
+<meta property="og:site_name" content="Ctomdsotr">
+<meta property="og:description" content="一切都是对象用引用操纵对象在java中，一切被视为对象，操作对象的标识符实际上是对象的一个“引用”（reference）。书中以遥控器比引用，电视机比对象，我们直接操作的是遥控器（引用），再由遥控器来调控电视机（对象），而且我们可以在房间中走动的同时调控电视机，只需携带遥控器而不是电视机。此外，即使没有电视机，遥控器也可以独立存在。这个例子可以说明，我们可以使用引用，在不同的地方操作对象；我们也可">
+<meta property="og:updated_time" content="2017-06-11T12:01:21.640Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java编程思想之面向对象">
+<meta name="twitter:description" content="一切都是对象用引用操纵对象在java中，一切被视为对象，操作对象的标识符实际上是对象的一个“引用”（reference）。书中以遥控器比引用，电视机比对象，我们直接操作的是遥控器（引用），再由遥控器来调控电视机（对象），而且我们可以在房间中走动的同时调控电视机，只需携带遥控器而不是电视机。此外，即使没有电视机，遥控器也可以独立存在。这个例子可以说明，我们可以使用引用，在不同的地方操作对象；我们也可">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ctomdsotr.com/Java编程思想之面向对象.html"/>
+
+
+
+
+
+  <title> Java编程思想之面向对象 | Ctomdsotr </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ctomdsotr</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">心怀千里梦想，依然行在路上</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ctomdsotr.com/Java编程思想之面向对象.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alwill">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ctomdsotr">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java编程思想之面向对象
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-07T00:46:50+08:00">
+                2017-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/语言/" itemprop="url" rel="index">
+                    <span itemprop="name">语言</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一切都是对象"><a href="#一切都是对象" class="headerlink" title="一切都是对象"></a>一切都是对象</h1><h2 id="用引用操纵对象"><a href="#用引用操纵对象" class="headerlink" title="用引用操纵对象"></a>用引用操纵对象</h2><p>在java中，一切被视为对象，操作对象的标识符实际上是对象的一个“引用”（reference）。<br>书中以遥控器比引用，电视机比对象，我们直接操作的是遥控器（引用），再由遥控器来调控电视机（对象），而且我们可以在房间中走动的同时调控电视机，只需携带遥控器而不是电视机。此外，即使没有电视机，遥控器也可以独立存在。<br>这个例子可以说明，我们可以使用引用，在不同的地方操作对象；我们也可以拥有一个引用，这个引用也不一定必须有一个对象与之关联，但是这仅限于在我们使用这个引用之前。</p>
+<h2 id="必须由你创建所有对象"><a href="#必须由你创建所有对象" class="headerlink" title="必须由你创建所有对象"></a>必须由你创建所有对象</h2><p>在使用引用之前，必须关联一个对象。</p>
+<h3 id="对象存储在哪"><a href="#对象存储在哪" class="headerlink" title="对象存储在哪"></a>对象存储在哪</h3><p>程序运行时，对象是怎么进行放置安排的呢？</p>
+<ol>
+<li>寄存器。因为它位于CPU内部，所以存取最快，当然数量也极其有限（书中用了“极其有限”）。我们不能直接控制，也感觉不到它的存在。</li>
+<li>堆栈。位于RAM（随机访问存储器），是存放数据的一种内存区域（<a href="http://www.ruanyifeng.com/blog/2013/11/stack.html" title="stack的三种含义" target="_blank" rel="external">stack的三种含义</a>）。堆栈是有结构的，数据结构就是栈，每个区块大小固定，适宜存大小固定的数据，比如如对象的引用，基本数据类型。</li>
+<li>堆。位于RAM，没有结构，大小也不固定，可以任意存放。用于存放所有的对象。</li>
+<li>常量。直接存放在程序代码中（反编译class文件即可看到）。</li>
+<li>非RAM存储，比如数据库等。</li>
+</ol>
+<h3 id="特例：基本类型"><a href="#特例：基本类型" class="headerlink" title="特例：基本类型"></a>特例：基本类型</h3><p>前面我们知道所有对象都要使用new 创建，并且存在堆中。但是，一些比较小的、简单的变量，这样做不是很有效。这些变量，不用new来创建，是非引用类型的变量。这些变量直接存储值（引用类型变量存储的是对象的地址），位于堆栈中，因此更高效。<br>这些变量存放于堆栈，因此大小就要是固定的，在java中，也不像其他语言随机器硬件架构的变化而变化。这也是java具有可移植性的原因之一。<br>基本类型有boolean/byte/char/short/int/long/float/double/void。</p>
+<h2 id="永远不需要销毁对象"><a href="#永远不需要销毁对象" class="headerlink" title="永远不需要销毁对象"></a>永远不需要销毁对象</h2><ol>
+<li>作用域</li>
+<li>对象的作用域<br>基本类型，在作用域终点时就会从堆栈中移除；对象类型的变量，对象的引用在作用域终点会消失，但是对象依然会在堆中占据内存空间，直到被垃圾回收机制处理。</li>
+</ol>
+<h2 id="创建新的数据类型：类"><a href="#创建新的数据类型：类" class="headerlink" title="创建新的数据类型：类"></a>创建新的数据类型：类</h2><p>我们可以的的用户class（关键字）+空格+类型名，创建一个新的数据类型。<br>一旦定义了一个类，就可以在类中设置两种类型的元素:字段（数据成员）和方法（成员方法）。字段可以是任意类型的对象，可以是基本类型，也可以是引用类型（某个对象的引用）。</p>
+<h3 id="成员"><a href="#成员" class="headerlink" title="成员"></a>成员</h3><p>基本成员（基本类型成员）具有默认值，即便初始化（基本类型仅在作为成员变量时，java才会给定默认值）。但是，引用类型的成员为NULL，所以引用类型在创建后要先关联一个对象后才能被使用。</p>
+<h3 id="方法、参数和返回值"><a href="#方法、参数和返回值" class="headerlink" title="方法、参数和返回值"></a>方法、参数和返回值</h3><p>Java的方法决定了一个对象能够接收什么样的消息。方法的基本组成：名称、参数、返回值和方法体。方法名和参数（合称方法签名）唯一地标识一个方法。<br>方法只有通过对象才能被调用。<br>参数列表，指定要传递给方法什么样的信息，这些信息同Java的其他信息一样也是对象。像Java中任何传递对象的场合一样，这里传递的实际也是引用（基本类型是例外）。</p>
+<h3 id="static关键字"><a href="#static关键字" class="headerlink" title="static关键字"></a>static关键字</h3><p>static域和方法，不与包含它的那个类的任何对象关联在一起。非static域和方法必须与特定的对象关联。<br>在使用static域和方法时，可以使用类来调用（也是推荐的方式），也可以使用其所属类的对象。<br>static域只有一份存储空间，不过创建了多少个其所属类的对象。</p>
+<h1 id="初始化与清理"><a href="#初始化与清理" class="headerlink" title="初始化与清理"></a>初始化与清理</h1><blockquote>
+<p>随着计算机革命的发展，“不安全”的编程方式已逐渐成为编程代价高昂的主因之一。<br>初始化和清理正是涉及安全的两个问题。<br>许多C程序的错误都源于程序员忘记初始化变量。特别是在使用程序库时，如果用户不知道如何初始化库的构件（或者用户必须初始化的其他东西），更是如此。清理是一个特殊的问题，当使用完一个元素时，它对你也就不会有什么影响了，所以很容易把它忘记。这样一来，这个元素占用的资源就会一直得不到释放，结果是资源（特别是内存）用尽。</p>
+</blockquote>
+<p>引用了书中的原话，很清晰。为什么要初始化，以及java中约定用构造器初始化的意义，即使用程序库的时候，知道如何初始化并且也不会忘记。“清理”说的也很清楚。</p>
+<h2 id="用构造器确保初始化"><a href="#用构造器确保初始化" class="headerlink" title="用构造器确保初始化"></a>用构造器确保初始化</h2><p>构造器采用与类相同的名称。在创建对象时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new ClassName();</div></pre></td></tr></table></figure></p>
+<p>将会为对象分配存储空间，并调用相应的构造器。构造器是一种特殊的方法，没有返回值（这与返回值为空（void）不同）。<br>不接受任何参数的构造器叫做默认构造器，Java术语为无参构造器。</p>
+<h2 id="方法重载"><a href="#方法重载" class="headerlink" title="方法重载"></a>方法重载</h2><p>重载，用于表示相同但有细微差别的概念。将方法重载用于构造器，可以提供创建对象的多种方式，非构造器方法也可以使用。<br>区分重载方法：每个重载的方法都必须有一个独一无二的参数类型列表。而且，参数顺序也可以区分（不过，一般情况别这么做，会使代码难以维护）。但是，返回值是不能用于区分重载的。<br>基本类型的重载，基本类型能从一个“较小”的类型自动提升至一个“较大”的类型。char略有不同，如果找不恰好接收char参数的方法，会提升为int。基本类型很有必要从<a href="http://www.runoob.com/java/java-basic-datatypes.html" target="_blank" rel="external">这里学习</a>。</p>
+<h2 id="默认构造器"><a href="#默认构造器" class="headerlink" title="默认构造器"></a>默认构造器</h2><p>如果，你的类的中没有写构造器，则编译器就会自动帮你创建一个默认构造器；但是，如果你定义了一个构造器（无论是否有参数），编译器就不会帮你自动创建默认构造器了。</p>
+<h2 id="this关键字"><a href="#this关键字" class="headerlink" title="this关键字"></a>this关键字</h2><p>this关键字只能在方法内部使用，表示对“调用方法的那个对象”的引用。<br>不过，在方法内部调用同一个类的另一个方法，就不必使用this了，因为编译器自动帮你添加。只有当需要明确指出对当对象的引用时，才需要使用this，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class Lear&#123;</div><div class="line">  int i;</div><div class="line">  Leaf increament()&#123;</div><div class="line">     i++;</div><div class="line">     return this;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>this关键字对于将当前对象传递给其他方法也很有用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class ThisDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Person person = new Person();</div><div class="line">        person.eat(new Apple());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Person &#123;</div><div class="line">    public void eat(Apple apple) &#123;</div><div class="line">        Apple peeled = apple.getPeeled();</div><div class="line">        System.out.println(&quot;Yummy&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Apple &#123;</div><div class="line">    Apple getPeeled() &#123;</div><div class="line">        return Peeler.peel(this);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Peeler &#123;</div><div class="line">    static Apple peel(Apple apple) &#123;</div><div class="line">        // remove peel</div><div class="line">        return apple;</div><div class="line">    &#125;</div><div class="line">&#125;  /*output:</div><div class="line">Yummy</div><div class="line">*///:~</div></pre></td></tr></table></figure></p>
+<p>this还用与在构造器中调用构造器。</p>
+<h3 id="static的含义"><a href="#static的含义" class="headerlink" title="static的含义"></a>static的含义</h3><p>static方法，就是没有this的方法。</p>
+<h2 id="清理：终结处理和垃圾回收"><a href="#清理：终结处理和垃圾回收" class="headerlink" title="清理：终结处理和垃圾回收"></a>清理：终结处理和垃圾回收</h2><p>A a = new A(1);<br>a = new A(2); // new A(1)产生的对象将被丢弃，并等待回收（如果没有别的引用关联它）。</p>
+<h2 id="成员初始化"><a href="#成员初始化" class="headerlink" title="成员初始化"></a>成员初始化</h2><p>Java尽力保证：所有变量在使用前都能得到恰当的初始化。<br>对于方法的局部变量，Java以编译时错误的形式来贯彻这种保证。<br>对于类的数据成员（即字段），如果是基本类型，在创建对象时会有一个初始值（数字类型为0，布尔为false，char为0且打印为空白）；如果是引用类型，就会获得一个特殊值null。</p>
+<h2 id="构造器初始化"><a href="#构造器初始化" class="headerlink" title="构造器初始化"></a>构造器初始化</h2><p>可以使用构造器来进行初始化。但是，这无法阻止自动初始化的进行，成员初始化在构造初始化之前进行。</p>
+<h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><p>在类内部，变量定义的先后顺序决定了初始化的顺序。<br>即使，变量定义方法定义之间，他们仍旧会在任何方法（包括构造器）被调用之前得到初始化。</p>
+<h3 id="静态数据的初始化"><a href="#静态数据的初始化" class="headerlink" title="静态数据的初始化"></a>静态数据的初始化</h3><h3 id="显式静态初始化"><a href="#显式静态初始化" class="headerlink" title="显式静态初始化"></a>显式静态初始化</h3><h3 id="非静态实例初始化"><a href="#非静态实例初始化" class="headerlink" title="非静态实例初始化"></a>非静态实例初始化</h3><p>域/局部变量</p>
+<h2 id="数组初始化"><a href="#数组初始化" class="headerlink" title="数组初始化"></a>数组初始化</h2><h3 id="可变参数列表"><a href="#可变参数列表" class="headerlink" title="可变参数列表"></a>可变参数列表</h3><h2 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java编程思想/" rel="tag"># java编程思想</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Java编程思想.html" rel="next" title="Java编程思想">
+                <i class="fa fa-chevron-left"></i> Java编程思想
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Alwill" />
+          <p class="site-author-name" itemprop="name">Alwill</p>
+           
+              <p class="site-description motion-element" itemprop="description">刚刚上路的小码农</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/rengzailushang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/rengzailushang" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一切都是对象"><span class="nav-number">1.</span> <span class="nav-text">一切都是对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用引用操纵对象"><span class="nav-number">1.1.</span> <span class="nav-text">用引用操纵对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必须由你创建所有对象"><span class="nav-number">1.2.</span> <span class="nav-text">必须由你创建所有对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象存储在哪"><span class="nav-number">1.2.1.</span> <span class="nav-text">对象存储在哪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特例：基本类型"><span class="nav-number">1.2.2.</span> <span class="nav-text">特例：基本类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#永远不需要销毁对象"><span class="nav-number">1.3.</span> <span class="nav-text">永远不需要销毁对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建新的数据类型：类"><span class="nav-number">1.4.</span> <span class="nav-text">创建新的数据类型：类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#成员"><span class="nav-number">1.4.1.</span> <span class="nav-text">成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法、参数和返回值"><span class="nav-number">1.4.2.</span> <span class="nav-text">方法、参数和返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static关键字"><span class="nav-number">1.4.3.</span> <span class="nav-text">static关键字</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化与清理"><span class="nav-number">2.</span> <span class="nav-text">初始化与清理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用构造器确保初始化"><span class="nav-number">2.1.</span> <span class="nav-text">用构造器确保初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法重载"><span class="nav-number">2.2.</span> <span class="nav-text">方法重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#默认构造器"><span class="nav-number">2.3.</span> <span class="nav-text">默认构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this关键字"><span class="nav-number">2.4.</span> <span class="nav-text">this关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static的含义"><span class="nav-number">2.4.1.</span> <span class="nav-text">static的含义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清理：终结处理和垃圾回收"><span class="nav-number">2.5.</span> <span class="nav-text">清理：终结处理和垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员初始化"><span class="nav-number">2.6.</span> <span class="nav-text">成员初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造器初始化"><span class="nav-number">2.7.</span> <span class="nav-text">构造器初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化顺序"><span class="nav-number">2.7.1.</span> <span class="nav-text">初始化顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态数据的初始化"><span class="nav-number">2.7.2.</span> <span class="nav-text">静态数据的初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式静态初始化"><span class="nav-number">2.7.3.</span> <span class="nav-text">显式静态初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非静态实例初始化"><span class="nav-number">2.7.4.</span> <span class="nav-text">非静态实例初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组初始化"><span class="nav-number">2.8.</span> <span class="nav-text">数组初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可变参数列表"><span class="nav-number">2.8.1.</span> <span class="nav-text">可变参数列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举类型"><span class="nav-number">2.9.</span> <span class="nav-text">枚举类型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alwill</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Ctomdsotr</title>
+  <subtitle>心怀千里梦想，依然行在路上</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://ctomdsotr.com/"/>
+  <updated>2017-06-11T12:01:21.640Z</updated>
+  <id>http://ctomdsotr.com/</id>
+  
+  <author>
+    <name>Alwill</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java编程思想之面向对象</title>
+    <link href="http://ctomdsotr.com/Java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1.html"/>
+    <id>http://ctomdsotr.com/Java编程思想之面向对象.html</id>
+    <published>2017-06-06T16:46:50.000Z</published>
+    <updated>2017-06-11T12:01:21.640Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一切都是对象"><a href="#一切都是对象" class="headerlink" title="一切都是对象"></a>一切都是对象</h1><h2 id="用引用操纵对象"><a href="#用引用操纵对象" class="headerlink" title="用引用操纵对象"></a>用引用操纵对象</h2><p>在java中，一切被视为对象，操作对象的标识符实际上是对象的一个“引用”（reference）。<br>书中以遥控器比引用，电视机比对象，我们直接操作的是遥控器（引用），再由遥控器来调控电视机（对象），而且我们可以在房间中走动的同时调控电视机，只需携带遥控器而不是电视机。此外，即使没有电视机，遥控器也可以独立存在。<br>这个例子可以说明，我们可以使用引用，在不同的地方操作对象；我们也可以拥有一个引用，这个引用也不一定必须有一个对象与之关联，但是这仅限于在我们使用这个引用之前。</p>
+<h2 id="必须由你创建所有对象"><a href="#必须由你创建所有对象" class="headerlink" title="必须由你创建所有对象"></a>必须由你创建所有对象</h2><p>在使用引用之前，必须关联一个对象。</p>
+<h3 id="对象存储在哪"><a href="#对象存储在哪" class="headerlink" title="对象存储在哪"></a>对象存储在哪</h3><p>程序运行时，对象是怎么进行放置安排的呢？</p>
+<ol>
+<li>寄存器。因为它位于CPU内部，所以存取最快，当然数量也极其有限（书中用了“极其有限”）。我们不能直接控制，也感觉不到它的存在。</li>
+<li>堆栈。位于RAM（随机访问存储器），是存放数据的一种内存区域（<a href="http://www.ruanyifeng.com/blog/2013/11/stack.html" title="stack的三种含义" target="_blank" rel="external">stack的三种含义</a>）。堆栈是有结构的，数据结构就是栈，每个区块大小固定，适宜存大小固定的数据，比如如对象的引用，基本数据类型。</li>
+<li>堆。位于RAM，没有结构，大小也不固定，可以任意存放。用于存放所有的对象。</li>
+<li>常量。直接存放在程序代码中（反编译class文件即可看到）。</li>
+<li>非RAM存储，比如数据库等。</li>
+</ol>
+<h3 id="特例：基本类型"><a href="#特例：基本类型" class="headerlink" title="特例：基本类型"></a>特例：基本类型</h3><p>前面我们知道所有对象都要使用new 创建，并且存在堆中。但是，一些比较小的、简单的变量，这样做不是很有效。这些变量，不用new来创建，是非引用类型的变量。这些变量直接存储值（引用类型变量存储的是对象的地址），位于堆栈中，因此更高效。<br>这些变量存放于堆栈，因此大小就要是固定的，在java中，也不像其他语言随机器硬件架构的变化而变化。这也是java具有可移植性的原因之一。<br>基本类型有boolean/byte/char/short/int/long/float/double/void。</p>
+<h2 id="永远不需要销毁对象"><a href="#永远不需要销毁对象" class="headerlink" title="永远不需要销毁对象"></a>永远不需要销毁对象</h2><ol>
+<li>作用域</li>
+<li>对象的作用域<br>基本类型，在作用域终点时就会从堆栈中移除；对象类型的变量，对象的引用在作用域终点会消失，但是对象依然会在堆中占据内存空间，直到被垃圾回收机制处理。</li>
+</ol>
+<h2 id="创建新的数据类型：类"><a href="#创建新的数据类型：类" class="headerlink" title="创建新的数据类型：类"></a>创建新的数据类型：类</h2><p>我们可以的的用户class（关键字）+空格+类型名，创建一个新的数据类型。<br>一旦定义了一个类，就可以在类中设置两种类型的元素:字段（数据成员）和方法（成员方法）。字段可以是任意类型的对象，可以是基本类型，也可以是引用类型（某个对象的引用）。</p>
+<h3 id="成员"><a href="#成员" class="headerlink" title="成员"></a>成员</h3><p>基本成员（基本类型成员）具有默认值，即便初始化（基本类型仅在作为成员变量时，java才会给定默认值）。但是，引用类型的成员为NULL，所以引用类型在创建后要先关联一个对象后才能被使用。</p>
+<h3 id="方法、参数和返回值"><a href="#方法、参数和返回值" class="headerlink" title="方法、参数和返回值"></a>方法、参数和返回值</h3><p>Java的方法决定了一个对象能够接收什么样的消息。方法的基本组成：名称、参数、返回值和方法体。方法名和参数（合称方法签名）唯一地标识一个方法。<br>方法只有通过对象才能被调用。<br>参数列表，指定要传递给方法什么样的信息，这些信息同Java的其他信息一样也是对象。像Java中任何传递对象的场合一样，这里传递的实际也是引用（基本类型是例外）。</p>
+<h3 id="static关键字"><a href="#static关键字" class="headerlink" title="static关键字"></a>static关键字</h3><p>static域和方法，不与包含它的那个类的任何对象关联在一起。非static域和方法必须与特定的对象关联。<br>在使用static域和方法时，可以使用类来调用（也是推荐的方式），也可以使用其所属类的对象。<br>static域只有一份存储空间，不过创建了多少个其所属类的对象。</p>
+<h1 id="初始化与清理"><a href="#初始化与清理" class="headerlink" title="初始化与清理"></a>初始化与清理</h1><blockquote>
+<p>随着计算机革命的发展，“不安全”的编程方式已逐渐成为编程代价高昂的主因之一。<br>初始化和清理正是涉及安全的两个问题。<br>许多C程序的错误都源于程序员忘记初始化变量。特别是在使用程序库时，如果用户不知道如何初始化库的构件（或者用户必须初始化的其他东西），更是如此。清理是一个特殊的问题，当使用完一个元素时，它对你也就不会有什么影响了，所以很容易把它忘记。这样一来，这个元素占用的资源就会一直得不到释放，结果是资源（特别是内存）用尽。</p>
+</blockquote>
+<p>引用了书中的原话，很清晰。为什么要初始化，以及java中约定用构造器初始化的意义，即使用程序库的时候，知道如何初始化并且也不会忘记。“清理”说的也很清楚。</p>
+<h2 id="用构造器确保初始化"><a href="#用构造器确保初始化" class="headerlink" title="用构造器确保初始化"></a>用构造器确保初始化</h2><p>构造器采用与类相同的名称。在创建对象时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new ClassName();</div></pre></td></tr></table></figure></p>
+<p>将会为对象分配存储空间，并调用相应的构造器。构造器是一种特殊的方法，没有返回值（这与返回值为空（void）不同）。<br>不接受任何参数的构造器叫做默认构造器，Java术语为无参构造器。</p>
+<h2 id="方法重载"><a href="#方法重载" class="headerlink" title="方法重载"></a>方法重载</h2><p>重载，用于表示相同但有细微差别的概念。将方法重载用于构造器，可以提供创建对象的多种方式，非构造器方法也可以使用。<br>区分重载方法：每个重载的方法都必须有一个独一无二的参数类型列表。而且，参数顺序也可以区分（不过，一般情况别这么做，会使代码难以维护）。但是，返回值是不能用于区分重载的。<br>基本类型的重载，基本类型能从一个“较小”的类型自动提升至一个“较大”的类型。char略有不同，如果找不恰好接收char参数的方法，会提升为int。基本类型很有必要从<a href="http://www.runoob.com/java/java-basic-datatypes.html" target="_blank" rel="external">这里学习</a>。</p>
+<h2 id="默认构造器"><a href="#默认构造器" class="headerlink" title="默认构造器"></a>默认构造器</h2><p>如果，你的类的中没有写构造器，则编译器就会自动帮你创建一个默认构造器；但是，如果你定义了一个构造器（无论是否有参数），编译器就不会帮你自动创建默认构造器了。</p>
+<h2 id="this关键字"><a href="#this关键字" class="headerlink" title="this关键字"></a>this关键字</h2><p>this关键字只能在方法内部使用，表示对“调用方法的那个对象”的引用。<br>不过，在方法内部调用同一个类的另一个方法，就不必使用this了，因为编译器自动帮你添加。只有当需要明确指出对当对象的引用时，才需要使用this，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class Lear&#123;</div><div class="line">  int i;</div><div class="line">  Leaf increament()&#123;</div><div class="line">     i++;</div><div class="line">     return this;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>this关键字对于将当前对象传递给其他方法也很有用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class ThisDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Person person = new Person();</div><div class="line">        person.eat(new Apple());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Person &#123;</div><div class="line">    public void eat(Apple apple) &#123;</div><div class="line">        Apple peeled = apple.getPeeled();</div><div class="line">        System.out.println(&quot;Yummy&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Apple &#123;</div><div class="line">    Apple getPeeled() &#123;</div><div class="line">        return Peeler.peel(this);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Peeler &#123;</div><div class="line">    static Apple peel(Apple apple) &#123;</div><div class="line">        // remove peel</div><div class="line">        return apple;</div><div class="line">    &#125;</div><div class="line">&#125;  /*output:</div><div class="line">Yummy</div><div class="line">*///:~</div></pre></td></tr></table></figure></p>
+<p>this还用与在构造器中调用构造器。</p>
+<h3 id="static的含义"><a href="#static的含义" class="headerlink" title="static的含义"></a>static的含义</h3><p>static方法，就是没有this的方法。</p>
+<h2 id="清理：终结处理和垃圾回收"><a href="#清理：终结处理和垃圾回收" class="headerlink" title="清理：终结处理和垃圾回收"></a>清理：终结处理和垃圾回收</h2><p>A a = new A(1);<br>a = new A(2); // new A(1)产生的对象将被丢弃，并等待回收（如果没有别的引用关联它）。</p>
+<h2 id="成员初始化"><a href="#成员初始化" class="headerlink" title="成员初始化"></a>成员初始化</h2><p>Java尽力保证：所有变量在使用前都能得到恰当的初始化。<br>对于方法的局部变量，Java以编译时错误的形式来贯彻这种保证。<br>对于类的数据成员（即字段），如果是基本类型，在创建对象时会有一个初始值（数字类型为0，布尔为false，char为0且打印为空白）；如果是引用类型，就会获得一个特殊值null。</p>
+<h2 id="构造器初始化"><a href="#构造器初始化" class="headerlink" title="构造器初始化"></a>构造器初始化</h2><p>可以使用构造器来进行初始化。但是，这无法阻止自动初始化的进行，成员初始化在构造初始化之前进行。</p>
+<h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><p>在类内部，变量定义的先后顺序决定了初始化的顺序。<br>即使，变量定义方法定义之间，他们仍旧会在任何方法（包括构造器）被调用之前得到初始化。</p>
+<h3 id="静态数据的初始化"><a href="#静态数据的初始化" class="headerlink" title="静态数据的初始化"></a>静态数据的初始化</h3><h3 id="显式静态初始化"><a href="#显式静态初始化" class="headerlink" title="显式静态初始化"></a>显式静态初始化</h3><h3 id="非静态实例初始化"><a href="#非静态实例初始化" class="headerlink" title="非静态实例初始化"></a>非静态实例初始化</h3><p>域/局部变量</p>
+<h2 id="数组初始化"><a href="#数组初始化" class="headerlink" title="数组初始化"></a>数组初始化</h2><h3 id="可变参数列表"><a href="#可变参数列表" class="headerlink" title="可变参数列表"></a>可变参数列表</h3><h2 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;一切都是对象&quot;&gt;&lt;a href=&quot;#一切都是对象&quot; class=&quot;headerlink&quot; title=&quot;一切都是对象&quot;&gt;&lt;/a&gt;一切都是对象&lt;/h1&gt;&lt;h2 id=&quot;用引用操纵对象&quot;&gt;&lt;a href=&quot;#用引用操纵对象&quot; class=&quot;headerlink&quot; ti
+    
+    </summary>
+    
+      <category term="语言" scheme="http://ctomdsotr.com/categories/%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="java编程思想" scheme="http://ctomdsotr.com/tags/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java编程思想</title>
+    <link href="http://ctomdsotr.com/Java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3.html"/>
+    <id>http://ctomdsotr.com/Java编程思想.html</id>
+    <published>2017-06-06T16:46:32.000Z</published>
+    <updated>2017-06-07T00:31:37.687Z</updated>
+    
+    <content type="html"><![CDATA[<p>从学生时代到工作，java用了可以说相当长的时间了，但是系统的学习在第一次之后就没有了，所以这次重新学习，希望有新的理解。</p>
+<p>以Bruce Eckel的经典之作《Java编程思想》为指导进行学习，先简要列举了学习顺序，如下：<br>1.面向对象编程思想<br>封装、继承、多态、接口<br>2.并发<br>3.集合及其原理<br>4.泛型、设计模式<br>5.io<br>6.异常<br>7.网络编程<br>8.运行时类型信息RTTI</p>
+<p>将学习过程记录，仅作为自己的总结。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从学生时代到工作，java用了可以说相当长的时间了，但是系统的学习在第一次之后就没有了，所以这次重新学习，希望有新的理解。&lt;/p&gt;
+&lt;p&gt;以Bruce Eckel的经典之作《Java编程思想》为指导进行学习，先简要列举了学习顺序，如下：&lt;br&gt;1.面向对象编程思想&lt;br&gt;封
+    
+    </summary>
+    
+      <category term="语言" scheme="http://ctomdsotr.com/categories/%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="java编程思想" scheme="http://ctomdsotr.com/tags/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://ctomdsotr.com/hello-world.html"/>
+    <id>http://ctomdsotr.com/hello-world.html</id>
+    <published>2017-06-04T14:20:04.187Z</published>
+    <updated>2017-06-03T15:14:24.638Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>初识推荐系统</title>
+    <link href="http://ctomdsotr.com/%E5%88%9D%E8%AF%86%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F.html"/>
+    <id>http://ctomdsotr.com/初识推荐系统.html</id>
+    <published>2017-06-03T15:32:43.000Z</published>
+    <updated>2017-06-04T04:45:49.496Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="EasyRec"><a href="#EasyRec" class="headerlink" title="EasyRec"></a>EasyRec</h3><p><a href="http://easyrec.org/" target="_blank" rel="external">http://easyrec.org/</a><br>EasyRec基于Java的开源推荐系统，B/S架构，具有可视化管理。提供了REST API和JavaScript API。<br>业务系统调用API将用户行为（浏览、购买、评价）存储于EasyRec（可配置mysql），推荐引擎会周期性进行分析并生成推荐，通过API提供出来。<br>相对比较简单，更像一个完整的产品。</p>
+<h3 id="Mahout"><a href="#Mahout" class="headerlink" title="Mahout"></a>Mahout</h3><p><a href="http://mahout.apache.org/" target="_blank" rel="external">http://mahout.apache.org/</a><br>与EasyRec相比，Mahout同样基于Java，但要复杂，还没有研究。<br><a href="http://itindex.net/detail/49323-mahout-%E5%AD%A6%E4%B9%A0-mahout" target="_blank" rel="external">http://itindex.net/detail/49323-mahout-%E5%AD%A6%E4%B9%A0-mahout</a></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a href="http://www.cnblogs.com/haore147/p/5220026.html" target="_blank" rel="external">http://www.cnblogs.com/haore147/p/5220026.html</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;EasyRec&quot;&gt;&lt;a href=&quot;#EasyRec&quot; class=&quot;headerlink&quot; title=&quot;EasyRec&quot;&gt;&lt;/a&gt;EasyRec&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://easyrec.org/&quot; target=&quot;_blank&quot; rel=
+    
+    </summary>
+    
+      <category term="Study" scheme="http://ctomdsotr.com/categories/Study/"/>
+    
+    
+      <category term="Recommender system" scheme="http://ctomdsotr.com/tags/Recommender-system/"/>
+    
+  </entry>
+  
+</feed>
