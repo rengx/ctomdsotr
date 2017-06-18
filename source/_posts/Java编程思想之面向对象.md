@@ -205,3 +205,216 @@ public class NewVarArgs {
 ```
 如果你有一组事务，可以把它们作为列表传递；而如果你已经有一个数组，该方法可以把它们作为可变参数列表来接受。
 ## 枚举类型
+
+
+# 复用类
+
+## 组合语法
+将对象引用置于新类中就是使用组合。
+
+## 继承语法
+继承是所有OOP语言和Java语言不可缺少的组成部分。当创建一个类的时候，总是在继承，除非已明确指出要从其他类继承，否则就是在隐式的从Java的标准根类Object进行继承。
+
+组合的语法比较平实，但继承是使用特殊的一种语法，即**extends**。
+### 初始化基类
+当创建一个导出类的对象时，该对象会包含一个基类的子对象。这个子对象与用基类直接创建对象是一样的，但这个子对象被包装在导出类对象内部。因此，对基类子对象的初始化也至关重要，而且也仅有一种方法：
+在构造器中调用基类的构造器来执行初始化，而基类构造器具有执行基类初始化所需要的所有知识和能力。
+
+当读到这句话的时候，它对自己有一定的触动。因为，在以往的编程经历中，设计一个类的时候，几乎都忽略了构造器的这种能力。
+
+对于基类默认构造器，Java会自动在导出类的构造器中插入对基类构造器的调用。
+对于基类带参数的构造器，必须使用关键字**super**显式的编写调用基类构造器的语句。而且，调用基类构造器必须位于导出类构造器中的最前面。否则，编译报错。
+```
+Demo(int i){
+  super(i);  // 第一句
+  // 其他处理
+}
+```
+
+## 代理
+将一个成员对象置于所要构造的新类中（就像组合），与此同时在新类中暴露了该成员对象的所有方法（就像继承）。（当然，不一定是所有方法）
+
+书中太空船的例子。
+```
+/**
+ * 太空船控制模块
+ * 
+ * @author rengzailushang
+ *
+ */
+public class SpaceShipControls {
+	void forward(int velocity) {
+	}
+	void back(int velocity) {
+	}
+}
+```
+如果使用继承，
+```
+/**
+ * 使用继承建造太空船
+ * 
+ * @author rengzailushang
+ *
+ */
+public class SpaceShip extends SpaceShipControls{
+	private String name;
+	public SpaceShip(String name) {
+		this.name = name;
+	}
+}
+```
+然后，SpaceShip并非真正的SpaceShipControls类型。所以，代理可以解决这一问题：
+```
+/**
+ * 使用代理建造太空船
+ * 
+ * @author rengzailushang
+ *
+ */
+public class SpaceShip2 {
+	private String name;
+	private SpaceShipControls control = new SpaceShipControls();
+	public SpaceShip2(String name) {
+		this.name = name;
+	}
+	public void forward(int velocity) {
+		control.forward(velocity);
+	}
+	public void back(int velocity) {
+		control.back(velocity);
+	}
+}
+```
+书中还提到，尽管Java语言不直接支持代理，但是很多工具如JetBrains Idea IDE等可以自动生成上述例子。不过我没有去学习。
+
+## 结合使用组合和继承
+### 确保正确的清理
+前面“初始化与清理”中，我们不知道Java垃圾回收器何时被调用，或者它是否被调用。因此，如果你想要某个类清理一些东西，就必须显式的编写一个特殊的方法来做这个事情，不要使用**finalize()**。
+### 名称屏蔽
+如果Java的基类中拥有某个已被多次重载的方法，那么在导出类中重新定义该方法名称并不会屏蔽其在基类中的任何版本。如果不想重载，可以使用@Override注解。
+```
+public class OverrideDemo extends BaseClass{
+	//@Override
+	//void base(String i){} // 基类中必须有可重写的方法，否则编译报错
+	
+	@Override
+	void base(int i){}
+}
+
+class BaseClass {
+	void base(int i){}
+}
+```
+
+## 在组合与继承之间选择
+组合，通常用于想在新类中使用现有类的功能而非它的接口的情形。并且，一般组合成员都使用private，以隐藏具体实现。但是有时为了帮助该新类的使用者去了解怎么使用，也可以设置成public，但这是个例。
+
+继承，使用某个现有类，并开发一个它的特殊版本。
+
+"is-a"(是一个)的关系是用继承来表达，而“has-a”(有一个)的关系则用组合来表达。就像“车子”是一个“交通工具”，“太空船”有一个“控制模块”。
+
+## protected关键字
+书中这样讲，“现在，我们以介绍完了继承，关键字**protected**最终具有了意义。”，我觉得这真是一种讲解的技巧。
+
+在实际项目中，经常会想到将某些事物尽可能对世界隐藏起来，但仍然允许导出类的成员访问它们。**protected**就是这个作用。另外，protected也提供了包内访问权限。
+
+最好的方式，还是将域保持为**private**：你应当一直保留“更改底层实现”的权利，然后通过protected方法来控制类的继承者的访问权限。
+
+## 向上转型
+继承技术最重要的就是，表现新类与基类间的关系，即“新类是现有类的一种类型”。
+
+为什么叫“向上转型”？
+传统的类继承图绘制：将根置于页面的顶端，然后逐渐向下。所以，由导出类转型为基类，在继承图上是向上移动的，因此为向上转型。
+向上转型，是从一个专用类向较通用的类转换，所以总是安全的。
+
+**是否真的需要向上转型**也是判断是否应当使用继承的方法。虽然继承是OOP的重要技术与思想，但是并不意味着尽可能使用，相反，应慎用。
+
+## final关键字
+### final数据
+1. 编译时常量
+这种final数据，必须是基本类型，且在定义时必须赋值。编译器可以将常量代入到任何用到它的计算式中，这减轻了运行时的负担。
+
+2. final引用类型
+不变的是引用，不是对象。
+
+3. 空白final
+可以在定义时不进行赋值，但是在构造器中必须赋值。
+
+4. final参数
+在方法中，参数的值不能修改。
+### final方法
+1. 方法锁定
+以防继承类修改它的含义。
+类中所有的private方法都隐式的使用了final。
+
+2. 效率
+正常方式的执行方法调用机制是，将参数压入栈，跳至方法代码处并执行，然后跳回并清理栈中的参数，处理返回值。在早期的java版本中，final方法可以跳过这一步骤。但是，在Java5/6时，虚拟机会自动处理效率问题，我们无需使用final去提高效率。
+### final类
+不可被继承。
+
+## 初始化及类的加载
+每个类的编译代码都存在于它自己独立的文件中，该文件只在需要使用程序代码时才会被加载。加载发生于：
+
+1. 创建类的第一个对象时，
+2. static域或static方法被访问时（构造器也是static方法，尽管没有显式的使用static关键字）。
+所有的static对象和static代码段都会在加载时依程序中的顺序而以此初始化。
+
+通过一个例子了解包括继承在内的初始化过程。
+```
+/**
+ * 继承与初始化
+ * 
+ * @author rengzailushang
+ *
+ */
+public class Beetle extends Insect {
+	private int k = printInit("Beetle.k initialized");
+	public Beetle() {
+		System.out.println("k=" + k);
+		System.out.println("j=" + j);
+	}
+	public static int x2 = printInit("Beelte.x2 initialized");
+	public static void main(String[] args) {
+		System.out.println("Beetle constructor");
+		Beetle b = new Beetle();
+	}
+}
+
+class Insect {
+	private int i = 9;
+	protected int j;
+	Insect() {
+		System.out.println("i=" + i + ",j=" + j);
+		j = 39;
+	}
+	public static int x1 = printInit("Insect.x1 initialized");
+	static int printInit(String s) {
+		System.out.println(s);
+		return 47;
+	}
+} /* Output:
+Insect.x1 initialized
+Beelte.x2 initialized
+Beetle constructor
+i=9,j=0
+Beetle.k initialized
+k=47
+j=39
+*///:~
+```
+
+1. 访问Beetle.main()(static方法)，加载器启动并找出Beetle类的编译代码。加载Beetle类，发现它有一个基类，于是继续加载基类（如果基类仍有基类，则继续加载，如此类推）。
+2. 根基类static初始化，下一个导出类，如此类推。
+3. 类加载完后，开始创建Beetle对象，首先对象中的成员被设为默认值（即便定义时被赋值，也要先设为默认值，再初始化）。
+4. Beetle构造器被调用，先调用基类构造器（super()），基类中与3、4同。
+5. 基类构造器完成后，Beetle实例变量初始化，然后再执行构造器中的其他部分。
+
+## 总结
+组合一般是将现有类型作为新类型底层实现的一部分来加以复用，而继承复用的是接口。
+
+开始设计时，优先考虑组合（或代理），只有确实必要时才使用继承。在设计一个系统时，目标应该是找到或创建某些类，每个类都有具体的用途，既不会太大（功能太多而难以复用），也不会太小。
+
+当开始设计一个系统时，应该意识到程序开发是一种增量过程，而不是快速见效。
+
+（对于我来说，这段总结值得思考，我经常在开始开发一个项目或功能时，追求过于全面的考虑）
