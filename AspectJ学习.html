@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="软件工程" />
+  <meta name="keywords" content="AOP," />
 
 
 
@@ -89,16 +89,17 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="Introduction to AspectJ1.pointcuts 切入点2.advice3.inter-type declarations 类型间声明4.aspects 方面 pointcuts和advice动态的影响程序流，inter-type declarations静态的影响程序的类层级，aspects封装了这些构造。(pointcuts and advice dynamically a">
+<meta name="keywords" content="AOP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://ctomdsotr.com/hello-world.html">
+<meta property="og:title" content="AspectJ学习">
+<meta property="og:url" content="http://ctomdsotr.com/AspectJ学习.html">
 <meta property="og:site_name" content="Ctomdsotr">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-06-03T15:14:24.638Z">
+<meta property="og:description" content="Introduction to AspectJ1.pointcuts 切入点2.advice3.inter-type declarations 类型间声明4.aspects 方面 pointcuts和advice动态的影响程序流，inter-type declarations静态的影响程序的类层级，aspects封装了这些构造。(pointcuts and advice dynamically a">
+<meta property="og:updated_time" content="2017-06-24T15:33:55.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="AspectJ学习">
+<meta name="twitter:description" content="Introduction to AspectJ1.pointcuts 切入点2.advice3.inter-type declarations 类型间声明4.aspects 方面 pointcuts和advice动态的影响程序流，inter-type declarations静态的影响程序的类层级，aspects封装了这些构造。(pointcuts and advice dynamically a">
 
 
 
@@ -126,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://ctomdsotr.com/hello-world.html"/>
+  <link rel="canonical" href="http://ctomdsotr.com/AspectJ学习.html"/>
 
 
 
 
 
-  <title> Hello World | Ctomdsotr </title>
+  <title> AspectJ学习 | Ctomdsotr </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -281,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ctomdsotr.com/hello-world.html">
+    <link itemprop="mainEntityOfPage" href="http://ctomdsotr.com/AspectJ学习.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alwill">
@@ -302,7 +303,7 @@
             
             
               
-                Hello World
+                AspectJ学习
               
             
           </h1>
@@ -317,8 +318,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-04T22:20:04+08:00">
-                2017-06-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-24T23:31:12+08:00">
+                2017-06-24
               </time>
             
 
@@ -327,6 +328,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -353,15 +376,22 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h1 id="Introduction-to-AspectJ"><a href="#Introduction-to-AspectJ" class="headerlink" title="Introduction to AspectJ"></a>Introduction to AspectJ</h1><p>1.pointcuts 切入点<br>2.advice<br>3.inter-type declarations 类型间声明<br>4.aspects 方面</p>
+<p>pointcuts和advice动态的影响程序流，inter-type declarations静态的影响程序的类层级，aspects封装了这些构造。<br>(pointcuts and advice dynamically affect program flow, inter-type decalrations statically affects program’s class hierarchy, and aspects encapsulate these new constructs.)</p>
+<p>join point是程序流中定义明确的点，pointcut会挑选处join point和这些点处的值，advice是程序运行至join point时执行的代码。这些就是AspectJ的动态部分。<br>(A <em>join point</em> is a well-defined point in the program flow. A <em>pointcut</em> picks out certain join points and values at those points. A piece of <em>advice</em> is code that is excuted when a join point is reached. These are the dynamic part of AspectJ.)</p>
+<p>AspectJ 还有不同种类的inter-type declarations, 这些，允许程序员修改程序的结果，也就是类的数量和类之间的关系。<br>(AspectJ alse has defferent kinds of <em>inter-type declarations</em> that allow the programmer to modify a program’s sturcture, namely, the members of classes and the relationship between classes.)</p>
+<p>AspectJ的aspect是横切问题的模块化单元。<br>(AspectJ’s <em>aspect</em> are the unit of modularity for crosscutting concerns. They behave somewhat like Java classes, but may alse include pointcuts, advice and inter-type declarations.)</p>
+<h2 id="The-Dynamic-Join-Point-Model"><a href="#The-Dynamic-Join-Point-Model" class="headerlink" title="The Dynamic Join Point Model"></a>The Dynamic Join Point Model</h2><p>The join point model provides the common frame of reference that make it possible to define the dynamic structure of crosscutting concerns.<br>AspectJ provides for many kinds of join points. One of them is method call join point.</p>
+<p>method call join points 包含接收防范调用的对象的行为，它包括构成方法调用的所有行为，从所有参数被评估之后开始，还包括返回（正常返回或抛出异常）。<br>(A method call join points encompasses the actions of an object receiving a method call. It includes all the actions that comprise a method call, starting after all arguments are evaluated up to and including return (either normally or by throwing an exception).)</p>
+<p>运行时的每次方法调用都是不同的join point，尽管它来自程序中相同的调用表达式。许多其他的join point可以在一个method call join point执行的同时运行——当执行方法体时发生的所有连接点，以及在这些方法中调用的方法。我们说这些join point在原始join point的动态上下文中执行。<br>(Each method call at runtime is a different join point, even if it comes from the same call expression in the program. Many other join point may run while a method call join point is executing – all the join points that happen while executing the method body, and in those methods called from the body. we say that these join points execute in the dynamic context of the original call join point.)</p>
+<h2 id="Pointcuts"><a href="#Pointcuts" class="headerlink" title="Pointcuts"></a>Pointcuts</h2><p>基于显式的方法签名的列举，即name-based crosscutting。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//1</div><div class="line">call(void Point.setX(int))</div><div class="line"></div><div class="line">//2</div><div class="line">call(void Point.setX(int)) ||</div><div class="line">call(void Point.setY(int))</div><div class="line"></div><div class="line">//3</div><div class="line">pointcut move():</div><div class="line">    call(void FigureElement.setXY(int,int)) ||</div><div class="line">    call(void Point.setX(int))              ||</div><div class="line">    call(void Point.setY(int))              ||</div><div class="line">    call(void Line.setP1(Point))            ||</div><div class="line">    call(void Line.setP2(Point));</div></pre></td></tr></table></figure></p>
+<p>基于方法的属性而不是准确的名字来指定pointcut，即property-based crosscutting。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//wildcards</div><div class="line">call(void Figure.make*(..))</div><div class="line">call(public * Figure.* (..))</div><div class="line"></div><div class="line">//cflow</div><div class="line">cflow(move())</div></pre></td></tr></table></figure></p>
+<h2 id="Advice"><a href="#Advice" class="headerlink" title="Advice"></a>Advice</h2><p>pointcuts选出join point，但是它并没有做什么事情。为了实现横切行为，我们使用advice。</p>
+<p>Advice brings together a pointcut(to pick out join points) and a body of code(to run at each of those join points).</p>
+<p>AspectJ有几个不同的advice。<br><em>before advice</em><br><em>after advice</em>，包括after returning, after throwing, after</p>
+<h3 id="Exposing-context-in-Pointcuts"><a href="#Exposing-context-in-Pointcuts" class="headerlink" title="Exposing context in Pointcuts"></a>Exposing context in Pointcuts</h3><p>Pointcuts not only pick out join points, they can alse expose part of execution context at their join points.Values exposed by a pointcut can be used in the body of advice declarations.</p>
+<p>An advice declaration has a parameter list(like a method)that gives names to all the pieces of context that it uses. For example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">after(FigureElement fe, int x, int y) returning:</div><div class="line">        ...SomePointcut... &#123;</div><div class="line">    ...SomeBody...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>The body of the advice uses the names just like method parameters, so<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">after(FigureElement fe, int x, int y) returning:</div><div class="line">        ...SomePointcut... &#123;</div><div class="line">    System.out.println(fe + &quot; moved to (&quot; + x + &quot;, &quot; + y + &quot;)&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -389,6 +419,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/AOP/" rel="tag"># AOP</a>
+          
+        </div>
+      
 
       
         
@@ -398,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/初识推荐系统.html" rel="next" title="初识推荐系统">
-                <i class="fa fa-chevron-left"></i> 初识推荐系统
+              <a href="/Java编程思想之面向对象.html" rel="next" title="Java编程思想之面向对象">
+                <i class="fa fa-chevron-left"></i> Java编程思想之面向对象
               </a>
             
           </div>
@@ -407,10 +443,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Java编程思想.html" rel="prev" title="Java编程思想">
-                Java编程思想 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -566,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction-to-AspectJ"><span class="nav-number">1.</span> <span class="nav-text">Introduction to AspectJ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Dynamic-Join-Point-Model"><span class="nav-number">1.1.</span> <span class="nav-text">The Dynamic Join Point Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointcuts"><span class="nav-number">1.2.</span> <span class="nav-text">Pointcuts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advice"><span class="nav-number">1.3.</span> <span class="nav-text">Advice</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exposing-context-in-Pointcuts"><span class="nav-number">1.3.1.</span> <span class="nav-text">Exposing context in Pointcuts</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
