@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ctomdsotr.com/"/>
-  <updated>2017-06-24T15:33:55.809Z</updated>
+  <updated>2017-07-02T16:05:12.190Z</updated>
   <id>http://ctomdsotr.com/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>书单</title>
+    <link href="http://ctomdsotr.com/%E4%B9%A6%E5%8D%95.html"/>
+    <id>http://ctomdsotr.com/书单.html</id>
+    <published>2017-07-02T16:02:59.000Z</published>
+    <updated>2017-07-02T16:05:12.190Z</updated>
+    
+    <content type="html"><![CDATA[<p>《当下的力量》</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;《当下的力量》&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="Study" scheme="http://ctomdsotr.com/categories/Study/"/>
+    
+    
+      <category term="读书" scheme="http://ctomdsotr.com/tags/%E8%AF%BB%E4%B9%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>AspectJ学习</title>
