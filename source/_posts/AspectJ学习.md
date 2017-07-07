@@ -5,7 +5,11 @@ tags: AOP
 categories: Programming
 ---
 
+AspectJ ，Java语言的AOP(Aspect-Oritend Programming)扩展。
+
 # Introduction to AspectJ
+*（主要是在官网学习时的笔记）*
+
 1.pointcuts 切入点
 2.advice
 3.inter-type declarations 类型间声明
@@ -89,5 +93,143 @@ after(FigureElement fe, int x, int y) returning:
         ...SomePointcut... {
     System.out.println(fe + " moved to (" + x + ", " + y + ")");
 }
+```
+
+
+# 使用
+## 安装aspectj
+
+aspect安装下载，
+官网地址，速度可能会慢：http://www.eclipse.org/aspectj/downloads.php#install
+也可使用：http://download.csdn.net/detail/smaiiboy/9477346
+
+笔者下载的是最新稳定版（Latest Stable Release）：aspectj-1.8.10.jar（下载时间2017/7/7），这是一个可执行jar，有别于我们通常使用的静态jar包。下载后使用jar命令安装：
+```
+java -jar {jar包位置}/aspectj-1.8.10.jar
+```
+运行后会看到安装界面，安装后如下：
+![安装成功图](index_files/d88b0746-1755-488e-b822-addca3002f92.png)
+
+## 开发
+AspectJ需要专门的JDK来编译，可以使用IDE插件比如Eclipse AJDT开发，也可以使用注解方式（AspectJ1.5版本或更新）。
+### 使用注解开发
+笔者使用Maven来构建的，使用的Mojo的aspectj-maven-plugin [http://mojo.codehaus.org/aspectj-maven-plugin/](http://mojo.codehaus.org/aspectj-maven-plugin/) 。
+（从http://blog.csdn.net/zl3450341/article/details/7673942 获悉的Maven编译插件，感谢博主！）
+
+pom.xml配置
+```
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ctomdsotr.study</groupId>
+    <artifactId>aspect</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>aspect Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <aspectjrt.version>1.8.10</aspectjrt.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectjrt.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjrt.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>aspectj-maven-plugin</artifactId>
+                    <version>1.8</version>
+                    <configuration>
+                        <!-- 选择大于1.5的版本，因为使用的是aspectj的注解方式 -->
+                        <complianceLevel>1.8</complianceLevel>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <sources>
+                            <source>
+                                <basedir>src/main/java</basedir>
+                                <includes>
+                                    <include>**/UserAspect.java</include>
+                                    <include>**/UserServiceImpl.java</include>  <!-- 不仅是aspect,还有其他的，不然只会编译aspect，没有办法测试，运行时会报错误: 找不到或无法加载主类 -->
+                                </includes>
+                            </source>
+                        </sources>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
+```
+源码会放在github上。
+
+具体的步骤笔者不在赘述，从官网或搜索引擎上都能找到资料，足以帮助开发者学习。笔者列举一下自己遇到的问题，如果有其他人正好遇到，希望能有所帮助。
+#### 如何编译
+配置好上述pom，然后使用mvn aspectj:complile 编译，在eclipse中，就是在项目或pom.xml上右键"Run As"，选择"Build build..."，填入"aspectj:complile" 。
+
+#### 编译时报错（没有加@aspect）
+
+#### 编译时提示http.servet.httpServert
+
+#### 编译成功，但是没有执行切面的advices
+
+#### 编译成功，但是只执行切面的advice,原来的方法被覆盖了，没有执行
+
+### 使用AJDT开发
+官网下载地址：http://www.eclipse.org/aspectj/downloads.php
+（AJDT for Eclipse：http://www.eclipse.org/ajdt/ ，其他IDEs: http://www.eclipse.org/aspectj/downloads.php#ides ）
+*（笔者只是写了一个例子，先贴一下代码）*
+```
+/**先写一个java class*/
+package com.ctomdsotr.study.aspectj.user;
+public class User {
+    private String userName;
+    private String userId;
+
+    public void addUser(String userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+        System.out.println("added "+userId);
+    }
+    public String getUser(String userId) {
+        return userName;
+    }
+    public static void main(String[] args) {
+        User user = new User();
+        user.addUser("1", "2");
+    }
+}
+
+/**创建一个切面*/
+package com.ctomdsotr.study.aspectj.user.aspect;
+import com.ctomdsotr.study.aspectj.user.User;
+public aspect FirstAspect {
+    pointcut addUser(String userId, String userName): execution(void User.addUser(String, String)) && args(userId, userName);
+    after(String userId, String userName) returning : addUser(userId, userName){
+        System.out.println(userId + ":" + userName);
+    }
+}
+
+/**最后运行User，控制台输出*/
+added 1
+1:2
 ```
 
