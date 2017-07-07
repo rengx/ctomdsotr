@@ -233,3 +233,11 @@ added 1
 1:2
 ```
 
+# 参考
+> 
+AspectJ Doc http://www.eclipse.org/aspectj/doc/released/adk15notebook/ataspectj.html
+Maven Plugin http://www.mojohaus.org/aspectj-maven-plugin/index.html
+Maven Jar http://mvnrepository.com/artifact/org.aspectj
+AspectJ 安装文件 http://download.csdn.net/detail/smaiiboy/9477346
+两个挺好的博客 http://blog.csdn.net/zl3450341/article/details/7673942 http://blog.csdn.net/ccj659/article/details/53302951
+
